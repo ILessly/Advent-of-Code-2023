@@ -7,7 +7,7 @@ t=0
 total=0
 
 digitltrs = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
-digitnums = ['o1n', 't2o', 't3e', 'f4r', 'f5e', 's6x', 's7n', 'e8t', 'n9e']
+digitnums = ['o1e', 't2o', 't3e', 'f4r', 'f5e', 's6x', 's7n', 'e8t', 'n9e']
 
 for i in inputlist:
   i=i.strip()
