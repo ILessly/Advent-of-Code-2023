@@ -1,6 +1,6 @@
 #Advent of Code Day 2
 
-input = open(r"C:\Users\chimp\Desktop\Advent of Code\2023\Day 2 Input.txt", "r")
+input = open(r"filepathonmycomputer", "r")
 inputlist = input.readlines()
 #print(inputlist)
 
