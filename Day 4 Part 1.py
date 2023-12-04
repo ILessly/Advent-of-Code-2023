@@ -1,6 +1,6 @@
 #Advent of Code Day 4
 
-input = open(r"C:\Users\chimp\Desktop\Advent of Code\2023\Day 4\Day 4 Input.txt", "r")
+input = open(r"filepath", "r")
 inputlist = input.readlines()
 
 def CheckForWinner(w, g):
