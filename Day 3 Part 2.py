@@ -1,5 +1,5 @@
 #Advent of Code Day 3 part 1
-input = open(r"C:\Users\chimp\Desktop\Advent of Code\2023\Day 3\Day_3_Input.txt", "r")
+input = open(r"filepathonmycomputer", "r")
 
 inputlist = input.readlines()
 max = len(inputlist) - 1
