@@ -1,6 +1,6 @@
 #Advent of Code Day 5 Part 1
 
-input = open(r"C:\Users\chimp\Desktop\Advent of Code\2023\Day 5\Day 5 Example.txt", "r")
+input = open(r"filename", "r")
 inputlist = input.readlines()
 
 def GetSeeds():
