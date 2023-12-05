@@ -1,6 +1,8 @@
 #Advent of Code Day 5 Part 1
 
-input = open(r"filename", "r")
+from datetime import datetime
+
+input = open(r"C:\Users\chimp\Desktop\Advent of Code\2023\Day 5\Day 5 Input.txt", "r")
 inputlist = input.readlines()
 
 def GetSeeds():
@@ -29,11 +31,16 @@ def GetRange(map):
         maprange.append(int(splitmap[1])+i)
     return maprange
         
-def ConvertNum(num)
-
-
+def ConvertNum(num, map, sourcerange):
+    num = num
+    splitmap = map.split()
+    num = int(splitmap[0]) +  sourcerange.index(num)
+    return num
+    
+numtype = ["Seed", "Soil", "Fertilizer", "Water", "Light", "Temp", "Humidity"]
 seeds = GetSeeds()
 maps = GetMaps()
+least = 0
 # print("Seeds:", seeds)
 # print("Maps:", maps)
 
@@ -42,8 +49,17 @@ for seed in seeds:
     for x in maps:
         for y in x:
             sourcerange = GetRange(y)
-            if int(num) in sourcerange:
-                ConvertNum(int(num), sourcerange)
+            if int(num) >= sourcerange[0] and int(num) <= sourcerange[len(sourcerange)-1]:
+                num = ConvertNum(int(num), y, sourcerange)
+                break
+    #print("Location is:", num)
+    if least == 0:
+        least = num
+    elif num < least:
+        least = num
+    print("Least is", num)
+print("Least is:", least)
+print(datetime.now().strftime("%H:%M"))
 
                 
                 
