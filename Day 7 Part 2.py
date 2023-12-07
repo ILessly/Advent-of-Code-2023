@@ -1,6 +1,6 @@
 #Advent of Code Day 7 Part 2
 
-input = open(r"2023\Day 6\Day 6 Input.txt", "r")
+input = open(r"2023\Day 7\Day 7 Input.txt", "r")
 inputlist = input.readlines()
 
 #These are reference variables. They don't change
