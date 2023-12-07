@@ -1,4 +1,4 @@
-#Advent of Code Day 5 Part 1
+#Advent of Code Day 7 Part 2
 
 input = open(r"2023\Day 6\Day 6 Input.txt", "r")
 inputlist = input.readlines()
