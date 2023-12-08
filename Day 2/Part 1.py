@@ -1,4 +1,4 @@
-#Advent of Code Day 2
+#Advent of Code Day 2 Part 1
 
 input = open(r"filelocationonmycomputer", "r")
 inputlist = input.readlines()
