@@ -43,12 +43,5 @@ for step in loc:
   endcount.append(count)
 print(endcount)
 
-for i in range(len(endcount)-1):
-  x1 = endcount[0]
-  x2 = endcount[1]
-  gcd = int(math.gcd(x1, x2))
-  lcm = int((x1 * x2)/gcd)
-  endcount.pop(0)
-  endcount[0] = lcm
-
-print("Total:", endcount)
+lcm = math.lcm(*endcount)
+print("Total steps", lcm)
