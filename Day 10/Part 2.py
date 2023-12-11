@@ -1,6 +1,6 @@
 #Advent of Code Day 10 Part 2
 
-input = open(r"Day 10\example2.txt", "r")
+input = open(r"Day 10\input.txt", "r")
 inputlist = input.readlines()
 
 map = []
@@ -15,10 +15,11 @@ def PrintMap():
     for row in map:
         line=""
         for col in row:
-            if col in "SVHC":
-                line += col
-            else:
-                line += "."
+            line += col
+            # if col in "SUDO":
+            #     line += col
+            # else:
+            #     line += "."
         print(line)
 
 def FindArea():
@@ -28,22 +29,15 @@ def FindArea():
         on_line = False
         corners = 0
         for col in row:
-            if row.count("V") == 0:
-                continue
-            if col is "C" and corners != 2:
-                corners += 1
-            elif col is "C" and corners == 2:
-                corners = 0
-            if not in_loop:
-               if col == "V" or corners == 2:
-                   in_loop = True 
-            elif in_loop:
-                if col == "V" or corners == 2:
+            if in_loop:
+                if col == "D":
                     in_loop = False
-                if col == ".":
+                if col not in "UD":
                     area += 1
-                    #print(map.index(row), row.index(col), col)
-            print(col, in_loop)
+            if not in_loop:
+                if col == "U":
+                    in_loop = True
+            #print(col, in_loop)
     print(area)
                  
 
@@ -67,8 +61,7 @@ def FirstStep(y, x):
     if x>0 and map[y][x-1] in "F-L":
         return "down"
 
-def Move(dir, y, x):
-    # map[y][x] = "O"
+def Move(dir_to, y, x):
     moves = {"up": [-1, 0], "right": [0, 1], "down": [1, 0], "left": [0, -1]}
     
     up = {"7": "left", "|": "up", "F": "right"}
@@ -78,34 +71,46 @@ def Move(dir, y, x):
     
     go = {"up": up, "right": right, "down": down, "left": left}
     
-    char = map[y+moves[dir][0]][x+moves[dir][1]]
-    y = y+moves[dir][0]
-    x = x+moves[dir][1]
-    if char is "S":
-        if dir in "up or down":
-           map[y][x] = "C"
-        else:
-            map[y][x] = "H" 
-        return "done", x, y, char
-    #print("Moving", dir)
-    #print("On", char, "can only go", go[dir][char])
-    if map[y][x] == "-":
-        map[y][x] = "H"
-    elif map[y][x] == "|":
-        map[y][x] = "V"
-    else:
-        map[y][x] = "C"
+    char = map[y][x]
+    nextchar = map[y+moves[dir_to][0]][x+moves[dir_to][1]]
+    y = y+moves[dir_to][0]
+    x = x+moves[dir_to][1]
+
+    #print("On", char, "Moving", dir_to, "to", nextchar)
     
-    return go[dir][char], x, y, char
+    # dir_to = map[y][x]
+    
+    # if dir_to is "up":
+    #     dir_to = "U"
+    # elif dir_to is "down":
+    #     dir_to = "D"
+    
+    # map[y][x] = dir_to
+    
+    if nextchar in "UD":
+        print("Back to start!")
+        return "done", x, y, nextchar
+
+    return go[dir_to][nextchar], x, y, nextchar
     
 steps = 0
 y, x = FindStart()
-dir = FirstStep(y,x)
-char = "s"
-while char not in "SVHC":
-    #print(steps)
+dir_to = FirstStep(y,x)
+#print("Starting on S, moving", dir_to)
+map[y][x] = "J"
+char = "J"
+dirletter = "U"
+#dir_to, x, x, char = Move(dir_to, y, x)
+
+while char not in "UD":
     steps += 1
-    dir, x, y, char = Move(dir, y, x)
+    dir_to, x, y, char = Move(dir_to, y, x)
+    if dir_to is "up":
+        dirletter = "U"
+    if dir_to is "down":
+        dirletter = "D"
+    map[y][x] = dirletter
+
     
 print("Completed in", steps, "steps")
 furthestpoint = int(steps/2)
