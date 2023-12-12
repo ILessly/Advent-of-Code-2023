@@ -2,7 +2,7 @@
 
 import math
 
-input = open(r"Day 11\example.txt", "r")
+input = open(r"Day 11\input.txt", "r")
 inputlist = input.readlines()
 
 #print(inputlist)
@@ -24,7 +24,7 @@ def PrintMap(map):
         print(line)
         i += 1
 
-def AddRows(map, extra):
+def AddRows(map):
     emptyrows = []
     for row in range(len(map)):
         if "#" not in rawmap[row]:
@@ -33,14 +33,12 @@ def AddRows(map, extra):
     blankrow = []
     for i in range(len(map[0])):
         blankrow.append("0")
-    for i in emptyrows:
-        for r in range(extra):
-            index = emptyrows.index(i)
-            map.insert(i+1+index*extra, blankrow)
-            print(r, "Adding", str(index+1) + "/" + str(len(emptyrows)), end="\r")
-    return map
+    # for i in emptyrows:
+    #     index = emptyrows.index(i)
+    #     map.insert(i+1+index, blankrow)
+    return map, emptyrows
 
-def AddCols(map, extra):
+def AddCols(map):
     emptycols = []
     for y in range(len(map[0])):
         column = []
@@ -49,25 +47,21 @@ def AddCols(map, extra):
         if "#" not in column:
             emptycols.append(y)
     #print("Empty columns:", emptycols)
-    for y in range(len(map)):
-        for x in emptycols:
-            for r in range(extra):
-                index = emptycols.index(x)
-                map[y].insert(x+1+index*extra, "0")
-                print(r, "Adding", str(index) + "/" + str(len(emptycols)), end="\r")
-
-    return map
+    # for y in range(len(map)):
+    #     for x in emptycols:
+    #         index = emptycols.index(x)
+    #         map[y].insert(x+1+index, "0")
+    return map, emptycols
 
 def ExpandMap(map):
-    extra = 100
     print("Adding columns...")
-    map = AddCols(map, extra)
+    map, emptycols = AddCols(map)
     print("Done!")
     print("Adding rows...")
-    map = AddRows(map, extra)
+    map, emptyrows = AddRows(map)
     print("Done!")
     
-    return map
+    return map, emptyrows, emptycols
  
 def GetGalaxies(map):
     galaxies = []
@@ -88,20 +82,54 @@ def FindDistance(g1, g2):
     
 
 print("Expanding map...")
-map = ExpandMap(rawmap)
+map, emptyrows, emptycols = ExpandMap(rawmap)
 
 print("Retrieving galaxies...")
 galaxies = GetGalaxies(map)
 print("Done!")
 
 total = 0
+expansion_factor = 1000000
+
 while galaxies:
+    #print("Rows:", emptyrows)
+    #print("Cols:", emptycols)
     g1 = galaxies[0]
     galaxies.pop(0)
     for g2 in galaxies:
+        crossed_rows = 0
+        crossed_cols = 0
+        #print("Getting distance from:", g1, "to", g2)
+
+        if g1[0] < g2[0]:
+            r1 = g1[0]
+            r2 = g2[0]
+        else:
+            r1 = g2[0]
+            r2 = g1[0]
+        for row in emptyrows:
+            if r1 < row < r2:
+                #print("Crosses row:", row)
+                crossed_rows += 1
+        #print("Check columns...")
+        if g1[1] < g2[1]:
+            c1 = g1[1]
+            c2 = g2[1]
+        else:
+            c1 = g2[1]
+            c2 = g1[1]
+        for col in emptycols:
+            if c1 < col < c2:
+                crossed_cols += 1
+        
         dist = FindDistance(g1, g2)
+        
+        #print("Crossed rows:", crossed_rows)
+        #print("Crossed cols:", crossed_cols)
+        extra_crossings = (crossed_rows + crossed_cols)*(expansion_factor-1)
+        dist += extra_crossings
+        #print("Distance is:", dist)
         total += dist
 
 print(total)
-
           
