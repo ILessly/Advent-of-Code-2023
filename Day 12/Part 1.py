@@ -16,7 +16,7 @@ def CheckSprings(prev, curr, group, springs, damaged):
         return 1
     
     if not damaged and springs:
-        if "#" not in springs:
+        if "#" not in springs+curr:
             return 1
         else:
             return 0
